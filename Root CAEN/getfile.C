@@ -1,6 +1,10 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+
 TString file1="value";
 TString file2="hour";
-TString file3="minute";
+TString file3="minuteute";
 TString file4="second";
 TString file5="channel";
 TString file6="style";
@@ -8,11 +12,11 @@ const int number=62;
 double x[number];
 double hour[number];
 double start1=22;
-double min[number];
+double minute[number];
 double start2=38;
 double sec[number];
 double start3=48;
-double time[number];
+double ttime[number];
 double channel[number];
 TString style[number];
 
@@ -36,13 +40,13 @@ void getfile(){
 		}
     }
 	//获取文件数据
-    std::filebuf ifile;
-	if (!ifile.open(file1, std::ios::in))
+    std::filebuf iifile;
+	if (!iifile.open(file1, std::ios::in))
 		std::cout << "File does not exist!" << std::endl;
 	else
 	{
 		TString str_line;
-		std::istream iline(&ifile);
+		std::istream iline(&iifile);
 		int i=0;
 //        while(iline) 
         for (int l=0;l<number;l++)
@@ -54,13 +58,13 @@ void getfile(){
 		}
     }
 	//获取文件数据
-    std::filebuf ifile;
-	if (!ifile.open(file2, std::ios::in))
+    std::filebuf iiifile;
+	if (!iiifile.open(file2, std::ios::in))
 		std::cout << "File does not exist!" << std::endl;
 	else
 	{
 		TString str_line;
-		std::istream iline(&ifile);
+		std::istream iline(&iiifile);
 		int i=0;
         for (int l=0;l<number;l++)
         {
@@ -72,31 +76,31 @@ void getfile(){
 		}
     }
     //获取文件数据
-    std::filebuf ifile;
-	if (!ifile.open(file3, std::ios::in))
+    std::filebuf iiiifile;
+	if (!iiiifile.open(file3, std::ios::in))
 		std::cout << "File does not exist!" << std::endl;
 	else
 	{
 		TString str_line;
-		std::istream iline(&ifile);
+		std::istream iline(&iiiifile);
 		int i=0;
         for (int l=0;l<number;l++)
         {
 			i++;
             str_line.ReadLine(iline);
-			min[i]=str_line.Atof();
-            min[i]=min[i]-start2;
-            std::cout << "min " <<i <<"="<< min[i]<< std::endl;
+			minute[i]=str_line.Atof();
+            minute[i]=minute[i]-start2;
+            std::cout << "minute " <<i <<"="<< minute[i]<< std::endl;
 		}
     }
     //获取文件数据
-    std::filebuf ifile;
-	if (!ifile.open(file4, std::ios::in))
+    std::filebuf iiiiifile;
+	if (!iiiiifile.open(file4, std::ios::in))
 		std::cout << "File does not exist!" << std::endl;
 	else
 	{
 		TString str_line;
-		std::istream iline(&ifile);
+		std::istream iline(&iiiiifile);
 		int i=0;
         for (int l=0;l<number;l++)
         {
@@ -108,13 +112,13 @@ void getfile(){
 		}
     }
     //获取文件数据
-    std::filebuf ifile;
-	if (!ifile.open(file5, std::ios::in))
+    std::filebuf iiiiiifile;
+	if (!iiiiiifile.open(file5, std::ios::in))
 		std::cout << "File does not exist!" << std::endl;
 	else
 	{
 		TString str_line;
-		std::istream iline(&ifile);
+		std::istream iline(&iiiiiifile);
 		int i=0;
         for (int l=0;l<number;l++)
         {
@@ -128,8 +132,8 @@ void getfile(){
     //计算时间差
     for(int i=1;i<63;i++)
     {
-        time[i]=hour[i]*3600 + min[i]*60 + sec[i];
-        cout<<"time"<<i<<"="<<time[i]<<endl;
+        ttime[i]=hour[i]*3600 + minute[i]*60 + sec[i];
+        cout<<"ttime"<<i<<"="<<ttime[i]<<endl;
     }
     //画图
     TCanvas *test = new TCanvas("test","test",1200,800);
@@ -144,32 +148,32 @@ void getfile(){
     h1->GetXaxis()->SetTitle("X: value" );
     h1->GetYaxis()->SetTitle("Y: Number");
 
-    TH1F* h2 =new TH1F("h2","time",1500,0,1500);
+    TH1F* h2 =new TH1F("h2","ttime",1500,0,1500);
     for(int k=1;k<63;k++)
     {
-        h2->Fill(time[k]);
-        std::cout << "time " <<k <<"="<< time[k]<< std::endl;
+        h2->Fill(ttime[k]);
+        std::cout << "ttime " <<k <<"="<< ttime[k]<< std::endl;
     }
-    h2->GetXaxis()->SetTitle("X: time/s" );
+    h2->GetXaxis()->SetTitle("X: ttime/s" );
     h2->GetYaxis()->SetTitle("Y: Number");
     
     TH2F *h3 = new TH2F("h3","2d histo",1500,0,1500,10000,0,9000);
     for (int k=1;k<63;k++) {
-         h3->Fill(time[k],x[k]) ; //填充2维直方图
+         h3->Fill(ttime[k],x[k]) ; //填充2维直方图
     }
-    h3->GetXaxis()->SetTitle("X: time/s" );
+    h3->GetXaxis()->SetTitle("X: ttime/s" );
     h3->GetYaxis()->SetTitle("Y: value");
 
-    TH1F* h4 =new TH1F("h4","channel-time",1500,0,1500);
+    TH1F* h4 =new TH1F("h4","channel-ttime",1500,0,1500);
     for(int k=1;k<63;k++)
     {
         if (channel[k]==0)   //选定channel号
         {
-        h4->Fill(time[k]);
-        std::cout << "time " <<k <<"="<< time[k]<< std::endl;
+        h4->Fill(ttime[k]);
+        std::cout << "ttime " <<k <<"="<< ttime[k]<< std::endl;
         }
     }
-    h4->GetXaxis()->SetTitle("X: time/s" );
+    h4->GetXaxis()->SetTitle("X: ttime/s" );
     h4->GetYaxis()->SetTitle("Y: Number");
     
     test->Divide(2,2);
